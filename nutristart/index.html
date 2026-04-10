@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NutriStart — Manger bien, vivre mieux</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green-deep: #1a3d2b;
+    --green-mid: #2d6a4f;
+    --green-fresh: #52b788;
+    --green-light: #b7e4c7;
+    --green-pale: #d8f3dc;
+    --cream: #faf6ef;
+    --cream-dark: #f0e9dc;
+    --orange: #e07b39;
+    --orange-light: #f4c48a;
+    --dark: #141414;
+    --text: #2a2a2a;
+    --text-muted: #6b6b6b;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 3rem;
+    background: rgba(250,246,239,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(42,42,42,0.08);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 900;
+    color: var(--green-deep);
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: var(--orange); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; font-size: 0.875rem; font-weight: 500;
+    color: var(--text-muted); transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--green-deep); }
+  .nav-cta {
+    background: var(--green-deep); color: white !important;
+    padding: 0.5rem 1.25rem; border-radius: 99px;
+    font-size: 0.875rem !important; font-weight: 500 !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--green-mid) !important; color: white !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    padding: 0;
+    position: relative; overflow: hidden;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 8rem 4rem 5rem 5rem;
+    background: var(--cream);
+    position: relative; z-index: 1;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--green-pale); color: var(--green-deep);
+    padding: 0.4rem 1rem; border-radius: 99px;
+    font-size: 0.8rem; font-weight: 500; width: fit-content;
+    margin-bottom: 2rem;
+  }
+  .hero-badge::before {
+    content: ''; width: 8px; height: 8px;
+    background: var(--green-fresh); border-radius: 50%;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 5vw, 5rem);
+    line-height: 1.05; font-weight: 900;
+    color: var(--green-deep);
+    margin-bottom: 1.5rem;
+  }
+  h1 em { color: var(--orange); font-style: italic; }
+  .hero-desc {
+    font-size: 1.1rem; color: var(--text-muted); line-height: 1.7;
+    max-width: 420px; margin-bottom: 2.5rem;
+  }
+  .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--green-deep); color: white;
+    padding: 0.875rem 2rem; border-radius: 99px;
+    font-size: 0.95rem; font-weight: 500;
+    text-decoration: none; transition: transform 0.2s, background 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--green-mid); transform: translateY(-2px); }
+  .btn-secondary {
+    background: transparent; color: var(--green-deep);
+    padding: 0.875rem 2rem; border-radius: 99px;
+    font-size: 0.95rem; font-weight: 500;
+    text-decoration: none; border: 1.5px solid var(--green-deep);
+    transition: transform 0.2s, background 0.2s;
+    display: inline-block;
+  }
+  .btn-secondary:hover { background: var(--green-pale); transform: translateY(-2px); }
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3.5rem;
+    padding-top: 2.5rem; border-top: 1px solid var(--cream-dark);
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 900; color: var(--green-deep);
+    line-height: 1;
+  }
+  .stat-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
+
+  .hero-right {
+    background: var(--green-deep);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .hero-illustration {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .big-circle {
+    width: 420px; height: 420px; border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .inner-circle {
+    width: 300px; height: 300px; border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 8px; text-align: center;
+  }
+  .hero-emoji { font-size: 5rem; display: block; }
+  .hero-tagline {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 700; font-style: italic;
+    color: var(--green-light); line-height: 1.3;
+    max-width: 200px;
+  }
+  .floating-card {
+    position: absolute;
+    background: white; border-radius: 16px;
+    padding: 0.875rem 1.1rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.82rem; font-weight: 500; color: var(--text);
+    animation: float 4s ease-in-out infinite;
+  }
+  .floating-card .fc-icon { font-size: 1.4rem; }
+  .floating-card.card1 { top: 22%; left: 6%; animation-delay: 0s; }
+  .floating-card.card2 { bottom: 22%; right: 5%; animation-delay: 1.5s; }
+  .floating-card.card3 { top: 55%; left: 4%; animation-delay: 0.8s; }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  .price-tag {
+    background: var(--orange); color: white;
+    border-radius: 99px; padding: 2px 8px;
+    font-size: 0.75rem; font-weight: 700;
+  }
+
+  /* SECTION BASE */
+  section { padding: 6rem 5rem; }
+  .section-label {
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--green-fresh);
+    margin-bottom: 1rem;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 900; color: var(--green-deep);
+    line-height: 1.1; margin-bottom: 1rem;
+  }
+  h2 em { color: var(--orange); font-style: italic; }
+  .section-intro {
+    font-size: 1rem; color: var(--text-muted); line-height: 1.7;
+    max-width: 520px; margin-bottom: 3rem;
+  }
+
+  /* MISSION */
+  .mission-section {
+    background: var(--green-deep); color: white;
+  }
+  .mission-section .section-label { color: var(--green-light); }
+  .mission-section h2 { color: white; }
+  .mission-section .section-intro { color: rgba(255,255,255,0.6); }
+  .mission-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .mission-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px; padding: 2rem;
+    transition: background 0.3s;
+  }
+  .mission-card:hover { background: rgba(255,255,255,0.1); }
+  .mission-icon {
+    font-size: 2.5rem; display: block; margin-bottom: 1rem;
+  }
+  .mission-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 700; color: white;
+    margin-bottom: 0.5rem;
+  }
+  .mission-card p { font-size: 0.9rem; color: rgba(255,255,255,0.55); line-height: 1.6; }
+  .values-pills {
+    display: flex; flex-wrap: wrap; gap: 10px; margin-top: 3rem;
+  }
+  .pill {
+    padding: 0.5rem 1.25rem; border-radius: 99px;
+    font-size: 0.875rem; font-weight: 500;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    background: rgba(255,255,255,0.08);
+  }
+
+  /* OFFRE */
+  .offre-section { background: var(--cream-dark); }
+  .offre-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  }
+  .offre-card {
+    background: white; border-radius: 24px;
+    padding: 2rem; position: relative; overflow: hidden;
+    transition: transform 0.3s;
+  }
+  .offre-card:hover { transform: translateY(-6px); }
+  .offre-card.featured {
+    background: var(--green-deep); color: white;
+  }
+  .offre-card.featured .offre-title,
+  .offre-card.featured .offre-desc { color: rgba(255,255,255,0.85); }
+  .offre-badge-featured {
+    position: absolute; top: 1.25rem; right: 1.25rem;
+    background: var(--orange); color: white;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 1px;
+    padding: 4px 10px; border-radius: 99px; text-transform: uppercase;
+  }
+  .offre-emoji { font-size: 2.5rem; margin-bottom: 1.25rem; display: block; }
+  .offre-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 900;
+    color: var(--green-deep); margin-bottom: 0.5rem;
+  }
+  .offre-card.featured .offre-name { color: white; }
+  .offre-price {
+    font-size: 2rem; font-weight: 300;
+    color: var(--orange); margin-bottom: 1rem;
+  }
+  .offre-price strong { font-weight: 900; font-size: 2.5rem; }
+  .offre-title { font-weight: 500; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem; }
+  .offre-desc { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; }
+  .offre-card.featured .offre-price { color: var(--orange-light); }
+  .offre-features { list-style: none; margin-top: 1.25rem; display: flex; flex-direction: column; gap: 8px; }
+  .offre-features li {
+    font-size: 0.875rem; color: var(--text-muted);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .offre-features li::before {
+    content: '✓'; color: var(--green-fresh);
+    font-weight: 700; font-size: 0.8rem;
+  }
+  .offre-card.featured .offre-features li { color: rgba(255,255,255,0.7); }
+  .offre-card.featured .offre-features li::before { color: var(--green-light); }
+
+  /* OU NOUS TROUVER */
+  .lieux-section { background: var(--cream); }
+  .lieux-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 3rem;
+  }
+  .lieu-item {
+    background: white; border-radius: 16px; padding: 1.5rem;
+    text-align: center; border: 1px solid var(--cream-dark);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .lieu-item:hover { border-color: var(--green-fresh); transform: translateY(-3px); }
+  .lieu-icon { font-size: 2rem; margin-bottom: 0.75rem; display: block; }
+  .lieu-name { font-weight: 500; font-size: 0.9rem; color: var(--green-deep); }
+
+  /* PARTENAIRES */
+  .partenaires-section { background: var(--cream-dark); }
+  .partenaires-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem;
+  }
+  .partenaire-card {
+    background: white; border-radius: 20px; padding: 1.75rem;
+    display: flex; align-items: center; gap: 1rem;
+    border: 1px solid var(--cream-dark);
+    transition: box-shadow 0.2s;
+  }
+  .partenaire-card:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+  .partenaire-logo {
+    width: 52px; height: 52px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; flex-shrink: 0;
+  }
+  .partenaire-name { font-weight: 500; font-size: 0.95rem; color: var(--green-deep); }
+  .partenaire-type { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+
+  /* COMMUNICATION */
+  .comms-section { background: var(--green-deep); }
+  .comms-section h2 { color: white; }
+  .comms-section .section-label { color: var(--green-light); }
+  .comms-section .section-intro { color: rgba(255,255,255,0.6); }
+  .comms-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;
+  }
+  .comms-media h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 700; color: white;
+    margin-bottom: 1rem;
+  }
+  .comms-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 2rem; }
+  .comms-tag {
+    padding: 0.45rem 1rem; border-radius: 99px;
+    font-size: 0.85rem; font-weight: 500;
+  }
+  .tag-tiktok { background: #010101; color: white; }
+  .tag-instagram { background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045); color: white; }
+  .tag-web { background: var(--green-mid); color: white; }
+  .tag-presse { background: rgba(255,255,255,0.15); color: white; }
+  .tag-flyer { background: var(--orange); color: white; }
+  .tag-app { background: #2563eb; color: white; }
+  .concurrents-box {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px; padding: 1.75rem;
+  }
+  .concurrents-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 700; color: white; margin-bottom: 1rem;
+  }
+  .vs-row {
+    display: flex; align-items: center; gap: 1rem;
+    background: rgba(255,255,255,0.04); border-radius: 12px;
+    padding: 1rem;
+  }
+  .vs-label { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+  .vs-name { font-weight: 500; color: white; font-size: 0.95rem; }
+  .vs-sep {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 900; color: var(--orange);
+  }
+  .avantages { margin-top: 1.25rem; display: flex; flex-wrap: wrap; gap: 8px; }
+  .avantage {
+    background: rgba(82,183,136,0.2); color: var(--green-light);
+    padding: 4px 12px; border-radius: 99px; font-size: 0.8rem; font-weight: 500;
+  }
+
+  /* CTA */
+  .cta-section {
+    background: var(--orange); text-align: center;
+    padding: 6rem 5rem;
+  }
+  .cta-section h2 { color: white; font-size: clamp(2rem, 4vw, 3.5rem); }
+  .cta-section p {
+    color: rgba(255,255,255,0.8); font-size: 1.1rem;
+    margin: 1rem 0 2.5rem; max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.6;
+  }
+  .btn-white {
+    background: white; color: var(--orange);
+    padding: 1rem 2.5rem; border-radius: 99px;
+    font-size: 1rem; font-weight: 700;
+    text-decoration: none; display: inline-block;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-white:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.15); }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark); color: rgba(255,255,255,0.5);
+    padding: 3rem 5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 900; color: white;
+  }
+  .footer-logo span { color: var(--orange); }
+  .footer-copy { font-size: 0.8rem; }
+  .footer-note { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+
+  /* ANIMATIONS */
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 8rem 1.5rem 4rem; }
+    section { padding: 4rem 1.5rem; }
+    .mission-grid, .offre-grid, .partenaires-grid { grid-template-columns: 1fr; }
+    .lieux-grid { grid-template-columns: repeat(2, 1fr); }
+    .comms-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; align-items: flex-start; padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Nutri<span>Start</span></div>
+  <ul class="nav-links">
+    <li><a href="#mission">Mission</a></li>
+    <li><a href="#offre">Offre</a></li>
+    <li><a href="#lieux">Où nous trouver</a></li>
+    <li><a href="#partenaires">Partenaires</a></li>
+    <li><a href="#contact" class="nav-cta">Nous rejoindre</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-badge">Île-de-France · Entreprendre pour Apprendre</div>
+    <h1>Manger bien,<br><em>sans se ruiner</em></h1>
+    <p class="hero-desc">
+      Une association qui apprend aux étudiants et jeunes travailleurs à cuisiner sainement, à budgéter leurs repas et à adopter une alimentation écologique et solidaire.
+    </p>
+    <div class="hero-buttons">
+      <a href="#offre" class="btn-primary">Découvrir nos offres</a>
+      <a href="#mission" class="btn-secondary">Notre mission</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">2,50€</div>
+        <div class="stat-label">le plat dès</div>
+      </div>
+      <div>
+        <div class="stat-num">3</div>
+        <div class="stat-label">formats disponibles</div>
+      </div>
+      <div>
+        <div class="stat-num">IDF</div>
+        <div class="stat-label">ancrage local</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-illustration">
+      <div class="floating-card card1">
+        <span class="fc-icon">🥗</span>
+        <div>
+          <div style="font-weight:700;color:#1a3d2b;">Recette du jour</div>
+          <div style="color:#6b6b6b;font-size:0.75rem;">Wok de légumes · 12 min</div>
+        </div>
+      </div>
+      <div class="floating-card card2">
+        <span class="fc-icon">📚</span>
+        <div>
+          <div style="font-weight:700;color:#1a3d2b;">Livre PDF</div>
+          <span class="price-tag">2 €</span>
+        </div>
+      </div>
+      <div class="floating-card card3">
+        <span class="fc-icon">🌱</span>
+        <div>
+          <div style="font-weight:700;color:#1a3d2b;">100% écologique</div>
+          <div style="color:#6b6b6b;font-size:0.75rem;">Producteurs locaux</div>
+        </div>
+      </div>
+      <div class="big-circle">
+        <div class="inner-circle">
+          <span class="hero-emoji">🥦</span>
+          <span class="hero-tagline">L'alimentation saine, accessible à tous</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section class="mission-section reveal" id="mission">
+  <p class="section-label">Notre mission</p>
+  <h2>L'alimentation <em>comme levier</em><br>d'émancipation</h2>
+  <p class="section-intro">
+    Nous croyons que bien manger n'est pas un privilège. Notre association forme, accompagne et équipe les jeunes pour qu'ils reprennent le contrôle de leur assiette — et de leur budget.
+  </p>
+  <div class="mission-grid">
+    <div class="mission-card">
+      <span class="mission-icon">🎓</span>
+      <h3>Formation</h3>
+      <p>Ateliers pratiques pour apprendre à cuisiner des repas équilibrés avec un petit budget, animés par des chefs et des nutritionnistes.</p>
+    </div>
+    <div class="mission-card">
+      <span class="mission-icon">📱</span>
+      <h3>Application live</h3>
+      <p>Une app mobile avec des recettes interactives, un suivi de budget alimentaire et des sessions de cuisine en direct.</p>
+    </div>
+    <div class="mission-card">
+      <span class="mission-icon">🌿</span>
+      <h3>Écologie & partage</h3>
+      <p>Produits sourcés auprès de producteurs locaux d'Île-de-France. Réduction du gaspillage et transmission des savoirs culinaires.</p>
+    </div>
+  </div>
+  <div class="values-pills">
+    <span class="pill">🌍 Écologie</span>
+    <span class="pill">🤝 Social</span>
+    <span class="pill">💚 Partage</span>
+    <span class="pill">💰 Accessibilité</span>
+    <span class="pill">🥕 Local</span>
+  </div>
+</section>
+
+<!-- OFFRE -->
+<section class="offre-section reveal" id="offre">
+  <p class="section-label">Nos offres</p>
+  <h2>Des formats <em>pour tous</em><br>les budgets</h2>
+  <p class="section-intro">
+    Que vous vouliez apprendre à cuisiner un plat ou recevoir un guide complet, nous avons une solution adaptée à votre quotidien.
+  </p>
+  <div class="offre-grid">
+    <div class="offre-card">
+      <span class="offre-emoji">🍽️</span>
+      <div class="offre-name">Le Plat Solo</div>
+      <div class="offre-price"><strong>2,50</strong> €</div>
+      <div class="offre-title">Un cours · un plat</div>
+      <div class="offre-desc">Apprenez à cuisiner un plat complet et équilibré lors d'un atelier d'une heure.</div>
+      <ul class="offre-features">
+        <li>Ingrédients fournis</li>
+        <li>Recette à emporter</li>
+        <li>Conseils nutritionnels</li>
+      </ul>
+    </div>
+    <div class="offre-card featured">
+      <span class="offre-badge-featured">⭐ Populaire</span>
+      <span class="offre-emoji">🍱</span>
+      <div class="offre-name">Le Pack Semaine</div>
+      <div class="offre-price"><strong>8</strong> €</div>
+      <div class="offre-title">Trois cours · trois plats</div>
+      <div class="offre-desc">Un trio de recettes pour couvrir vos repas de la semaine, en apprenant les bases culinaires essentielles.</div>
+      <ul class="offre-features">
+        <li>3 plats complets</li>
+        <li>Plan de menu hebdo</li>
+        <li>Guide budget inclus</li>
+        <li>Accès à l'application</li>
+      </ul>
+    </div>
+    <div class="offre-card">
+      <span class="offre-emoji">📖</span>
+      <div class="offre-name">Le Livre Numérique</div>
+      <div class="offre-price"><strong>2</strong> €</div>
+      <div class="offre-title">Livre de recettes PDF</div>
+      <div class="offre-desc">Un guide complet en téléchargement immédiat : recettes économiques, conseils de conservation et planning alimentaire.</div>
+      <ul class="offre-features">
+        <li>Téléchargement immédiat</li>
+        <li>Recettes économiques</li>
+        <li>Planning alimentaire</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- OÙ NOUS TROUVER -->
+<section class="lieux-section reveal" id="lieux">
+  <p class="section-label">Où nous trouver</p>
+  <h2>Présents partout<br>en <em>Île-de-France</em></h2>
+  <p class="section-intro">
+    Nous allons là où les étudiants et jeunes travailleurs vivent et consomment. Notre déploiement couvre toute la région.
+  </p>
+  <div class="lieux-grid">
+    <div class="lieu-item"><span class="lieu-icon">🎓</span><div class="lieu-name">Universités</div></div>
+    <div class="lieu-item"><span class="lieu-icon">🛒</span><div class="lieu-name">Grandes surfaces</div></div>
+    <div class="lieu-item"><span class="lieu-icon">🥬</span><div class="lieu-name">Marchés locaux</div></div>
+    <div class="lieu-item"><span class="lieu-icon">🥐</span><div class="lieu-name">Boulangeries</div></div>
+    <div class="lieu-item"><span class="lieu-icon">🏛️</span><div class="lieu-name">Ville de Paris</div></div>
+    <div class="lieu-item"><span class="lieu-icon">🌿</span><div class="lieu-name">Producteurs F&L</div></div>
+    <div class="lieu-item"><span class="lieu-icon">👨‍🍳</span><div class="lieu-name">Chefs cuisiniers</div></div>
+    <div class="lieu-item"><span class="lieu-icon">📱</span><div class="lieu-name">Réseaux sociaux</div></div>
+  </div>
+</section>
+
+<!-- PARTENAIRES -->
+<section class="partenaires-section reveal" id="partenaires">
+  <p class="section-label">Partenaires & financeurs</p>
+  <h2>Un réseau <em>solide</em><br>pour nous soutenir</h2>
+  <p class="section-intro">
+    Institutionnels, entreprises et donateurs : ensemble, ils rendent notre mission possible et notre impact durable.
+  </p>
+  <div class="partenaires-grid">
+    <div class="partenaire-card">
+      <div class="partenaire-logo" style="background:#f0f0ff;">🏛️</div>
+      <div>
+        <div class="partenaire-name">Ville de Paris</div>
+        <div class="partenaire-type">Partenaire institutionnel</div>
+      </div>
+    </div>
+    <div class="partenaire-card">
+      <div class="partenaire-logo" style="background:#fff0f0;">🗺️</div>
+      <div>
+        <div class="partenaire-name">Région Île-de-France</div>
+        <div class="partenaire-type">Partenaire institutionnel</div>
+      </div>
+    </div>
+    <div class="partenaire-card">
+      <div class="partenaire-logo" style="background:#f0fff4;">🍱</div>
+      <div>
+        <div class="partenaire-name">Sodexo</div>
+        <div class="partenaire-type">Partenaire entreprise</div>
+      </div>
+    </div>
+    <div class="partenaire-card">
+      <div class="partenaire-logo" style="background:#fffff0;">🥗</div>
+      <div>
+        <div class="partenaire-name">Nutritiéo</div>
+        <div class="partenaire-type">Partenaire nutrition</div>
+      </div>
+    </div>
+    <div class="partenaire-card">
+      <div class="partenaire-logo" style="background:#f0f8ff;">💊</div>
+      <div>
+        <div class="partenaire-name">Nutrition Santé</div>
+        <div class="partenaire-type">Partenaire santé</div>
+      </div>
+    </div>
+    <div class="partenaire-card">
+      <div class="partenaire-logo" style="background:#fff4f0;">❤️</div>
+      <div>
+        <div class="partenaire-name">Donateurs</div>
+        <div class="partenaire-type">Campagne de dons</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMUNICATION -->
+<section class="comms-section reveal">
+  <p class="section-label">Communication</p>
+  <h2>Partout où<br><em>vous êtes</em></h2>
+  <p class="section-intro">
+    De TikTok aux marchés du quartier, nous parlons à nos communautés là où elles vivent.
+  </p>
+  <div class="comms-grid">
+    <div class="comms-media">
+      <h3>Réseaux sociaux</h3>
+      <div class="comms-tags">
+        <span class="comms-tag tag-tiktok">TikTok</span>
+        <span class="comms-tag tag-instagram">Instagram</span>
+        <span class="comms-tag tag-app">Application</span>
+        <span class="comms-tag tag-flyer">Flyers</span>
+      </div>
+      <h3>Médias traditionnels</h3>
+      <div class="comms-tags">
+        <span class="comms-tag tag-presse">Presse locale</span>
+        <span class="comms-tag tag-web">Web</span>
+        <span class="comms-tag tag-presse">Journaux</span>
+      </div>
+    </div>
+    <div>
+      <div class="concurrents-box">
+        <h3>Notre positionnement</h3>
+        <div class="vs-row">
+          <div>
+            <div class="vs-label">Concurrent</div>
+            <div class="vs-name">Hello Fresh</div>
+          </div>
+          <div class="vs-sep">vs</div>
+          <div>
+            <div class="vs-label">Nous</div>
+            <div class="vs-name">NutriStart</div>
+          </div>
+        </div>
+        <div class="avantages">
+          <span class="avantage">✓ Gratuit</span>
+          <span class="avantage">✓ Accessible</span>
+          <span class="avantage">✓ Éducatif</span>
+          <span class="avantage">✓ Local IDF</span>
+          <span class="avantage">✓ Écologique</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section reveal" id="contact">
+  <h2>Prêt à manger <em style="font-style:italic;">mieux</em> ?</h2>
+  <p>Rejoignez l'association, participez à nos ateliers, ou devenez partenaire. Ensemble, rendons l'alimentation saine accessible à tous les jeunes d'Île-de-France.</p>
+  <a href="mailto:contact@nutristart.fr" class="btn-white">Nous contacter</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Nutri<span>Start</span></div>
+  <div class="footer-copy">Association loi 1901 · Île-de-France</div>
+  <div class="footer-note">Entreprendre pour Apprendre IDF © 2025</div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+</script>
+</body>
+</html>
